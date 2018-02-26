@@ -19,7 +19,7 @@
 
 ## Service Dependencies
 
-![](openstackservices.svg)
+![](img/openstackservices.svg)
 
 # Using Debug
 

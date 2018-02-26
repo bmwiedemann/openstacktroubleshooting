@@ -1,0 +1,14 @@
+
+digraph G {
+  horizon  [label="horizon\nDashboard"]
+  nova     [label="nova\nCompute"]
+  cinder   [label="cinder\nVolume"]
+  glance   [label="glance\nImage"]
+  neutron  [label="neutron\nNetworking"]
+  keystone [label="keystone\nAuth", color=green]
+  {horizon nova neutron glance cinder} -> keystone [color=green]
+  horizon -> {nova neutron glance cinder}
+  nova -> {neutron glance cinder}
+  glance -> cinder [style=dashed]
+  {glance cinder} -> ceph [style=dashed]
+}
