@@ -1,10 +1,12 @@
 .PHONY: all clean
 
+DOT := $(shell find img/ -name '*.dot')
 SVG := $(shell find img/ -name '*.svg')
 DIA := $(shell find img/ -name '*.dia')
+DOT_SVG := $(patsubst %.dot, %.svg, $(DOT))
 SVG_PNG := $(patsubst %.svg, %.png, $(SVG))
 DIA_PNG := $(patsubst %.dia, %.PNG, $(DIA))
-PNG :=  $(DIA_PNG) $(SVG_PNG)
+PNG :=  $(DIA_PNG) $(DOT_SVG)
 
 %.pdf: %.odp
 	libreoffice --headless --convert-to pdf $<
@@ -17,6 +19,8 @@ PNG :=  $(DIA_PNG) $(SVG_PNG)
 
 all: presentation.odp
 
+%.svg: %.dot
+	dot -Tsvg -o $@ $<
 img/%.png: img/%.svg
 	convert -density 200 -transparent white $< $@
 
@@ -30,5 +34,7 @@ clean:
 	rm -f img/*png
 	rm -f img/*PNG
 
+showpdf: presentation.pdf
+	evince $< &
 show: presentation.odp
 	ooimpress $< &
