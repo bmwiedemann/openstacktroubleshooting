@@ -82,6 +82,12 @@ qrouter-41f2b42d-d365-4ad2-8007-3e116b711e56
 
 `#` **` ovs-ofctl dump-flows br-fixed`**
 
+## On Compute Node
+
+`#` **` virsh list`**
+
+`#` **` virsh dumpxml $ID`**
+
 ## Tracing
 
 `>` **` strace -T sleep 2`**
