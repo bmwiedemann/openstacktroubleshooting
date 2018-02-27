@@ -1,10 +1,10 @@
-## Focus Areas
+[//]: # (## Focus Areas
 
 * Glance
 * Cinder
 * Nova
 * Neutron
-* Keystone
+* Keystone)
 
 ## Agenda
 
