@@ -90,7 +90,7 @@ qrouter-41f2b42d-d365-4ad2-8007-3e116b711e56
 
 `>` **` strace -e network netcat localhost 80`**
 
-`#` **` strace -p $(pidofproc -v neutron-server | cut -f1 -d" ")`**
+`#` **` strace -p $(pidofproc neutron-server | cut -f1 -d" ")`**
 
 `>` **` ltrace echo hello`**
 
@@ -98,7 +98,43 @@ qrouter-41f2b42d-d365-4ad2-8007-3e116b711e56
 
 ## Mysql / MariaDB
 
+```
+~/.my.cnf :
+[client]
+user     = cinder
+password = YOUR_PASSWORD
+host     = 192.168.81.29
+```
+
+`>` **` mysql cinder`**
+
+`MariaDB [cinder]>` **` show tables;`**
+
+`MariaDB [cinder]>` **` describe volumes;`**
+
+## MariaDB query
+
+`MariaDB [cinder]>` **` SELECT updated_at,id FROM volumes WHERE status='available';`**
+```
++---------------------+---------------------------------+
+| updated_at          | id                              |
++---------------------+---------------------------------+
+| 2018-01-29 09:43:10 | 02f5dcc6-1d5e-450f-22c7e622f158 |
+| 2017-12-01 15:02:31 | 065a1f4d-dd58-4a9d-2f8bdcc7818d |
++---------------------+---------------------------------+
+2 rows in set (0.00 sec)
+```
+
 ## Postgresql
+
+`#` **` su - postgres -c 'psql -d cinder'`**
+
+`cinder=#` **` \d`**
+
+`cinder=#` **` \d volumes`**
+
+`#` **` echo "SELECT updated_at,id FROM volumes WHERE status='available';" | 
+    su - postgres -c 'psql -d cinder'`**
 
 # Navigating logfiles
 
