@@ -138,4 +138,12 @@ host     = 192.168.81.29
 
 # Navigating logfiles
 
+## /var/log
+
+`#` **` cd /var/log ; ls */*.log`**
+
+`#` **` tail -f */*.log | grep ERROR`**
+
+# Questions?
+
 # Discussing further steps
