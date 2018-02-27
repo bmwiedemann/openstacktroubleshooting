@@ -43,7 +43,7 @@ verbose = true
 
 ## Network Debugging
 
-`#` **`ping -n $IP`**
+`#` **`ping -n -M do -s 1600 $IP`**
 
 `#` **`traceroute $IP`**
 
