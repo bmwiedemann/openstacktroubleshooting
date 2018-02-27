@@ -6,9 +6,11 @@ digraph G {
   glance   [label="glance\nImage"]
   neutron  [label="neutron\nNetworking"]
   keystone [label="keystone\nAuth", color=green]
+  ceph     [label="ceph\nObject+Block Storage"]
   {horizon nova neutron glance cinder} -> keystone [color=green]
   horizon -> {nova neutron glance cinder}
   nova -> {neutron glance cinder}
-  glance -> cinder [style=dashed]
+  glance -> cinder [style=dashed,minlen=2]
   {glance cinder} -> ceph [style=dashed]
+  {rank=same;neutron glance cinder}
 }
