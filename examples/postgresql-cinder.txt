@@ -1,0 +1,128 @@
+
+# su - postgres -c 'psql -d cinder'
+psql (9.4.13)
+Type "help" for help.
+
+cinder=# \d
+
+                       List of relations
+ Schema |               Name                |   Type   | Owner  
+--------+-----------------------------------+----------+--------
+ public | backups                           | table    | cinder
+ public | cgsnapshots                       | table    | cinder
+ public | clusters                          | table    | cinder
+ public | clusters_id_seq                   | sequence | cinder
+ public | consistencygroups                 | table    | cinder
+ public | driver_initiator_data             | table    | cinder
+ public | driver_initiator_data_id_seq      | sequence | cinder
+ public | encryption                        | table    | cinder
+ public | group_snapshots                   | table    | cinder
+ public | group_type_projects               | table    | cinder
+ public | group_type_projects_id_seq        | sequence | cinder
+ public | group_type_specs                  | table    | cinder
+ public | group_type_specs_id_seq           | sequence | cinder
+ public | group_types                       | table    | cinder
+ public | group_volume_type_mapping         | table    | cinder
+ public | group_volume_type_mapping_id_seq  | sequence | cinder
+ public | groups                            | table    | cinder
+ public | image_volume_cache_entries        | table    | cinder
+ public | image_volume_cache_entries_id_seq | sequence | cinder
+ public | messages                          | table    | cinder
+ public | migrate_version                   | table    | cinder
+ public | quality_of_service_specs          | table    | cinder
+ public | quota_classes                     | table    | cinder
+ public | quota_classes_id_seq              | sequence | cinder
+ public | quota_usages                      | table    | cinder
+ public | quota_usages_id_seq               | sequence | cinder
+ public | quotas                            | table    | cinder
+ public | quotas_id_seq                     | sequence | cinder
+ public | reservations                      | table    | cinder
+ public | reservations_id_seq               | sequence | cinder
+ public | services                          | table    | cinder
+ public | services_id_seq                   | sequence | cinder
+ public | snapshot_metadata                 | table    | cinder
+ public | snapshot_metadata_id_seq          | sequence | cinder
+ public | snapshots                         | table    | cinder
+ public | transfers                         | table    | cinder
+ public | volume_admin_metadata             | table    | cinder
+ public | volume_admin_metadata_id_seq      | sequence | cinder
+ public | volume_attachment                 | table    | cinder
+ public | volume_glance_metadata            | table    | cinder
+ public | volume_glance_metadata_id_seq     | sequence | cinder
+ public | volume_metadata                   | table    | cinder
+ public | volume_metadata_id_seq            | sequence | cinder
+ public | volume_type_extra_specs           | table    | cinder
+ public | volume_type_extra_specs_id_seq    | sequence | cinder
+ public | volume_type_projects              | table    | cinder
+ public | volume_type_projects_id_seq       | sequence | cinder
+ public | volume_types                      | table    | cinder
+ public | volumes                           | table    | cinder
+ public | workers                           | table    | cinder
+ public | workers_id_seq                    | sequence | cinder
+(51 rows)
+
+cinder=# \d volumes
+
+                        Table "public.volumes"
+           Column            |            Type             | Modifiers 
+-----------------------------+-----------------------------+-----------
+ created_at                  | timestamp without time zone | 
+ updated_at                  | timestamp without time zone | 
+ deleted_at                  | timestamp without time zone | 
+ deleted                     | boolean                     | 
+ id                          | character varying(36)       | not null
+ ec2_id                      | character varying(255)      | 
+ user_id                     | character varying(255)      | 
+ project_id                  | character varying(255)      | 
+ host                        | character varying(255)      | 
+ size                        | integer                     | 
+ availability_zone           | character varying(255)      | 
+ status                      | character varying(255)      | 
+ attach_status               | character varying(255)      | 
+ scheduled_at                | timestamp without time zone | 
+ launched_at                 | timestamp without time zone | 
+ terminated_at               | timestamp without time zone | 
+ display_name                | character varying(255)      | 
+ display_description         | character varying(255)      | 
+ provider_location           | character varying(256)      | 
+ provider_auth               | character varying(256)      | 
+ snapshot_id                 | character varying(36)       | 
+ volume_type_id              | character varying(36)       | 
+ source_volid                | character varying(36)       | 
+ bootable                    | boolean                     | 
+ provider_geometry           | character varying(255)      | 
+ _name_id                    | character varying(36)       | 
+ encryption_key_id           | character varying(36)       | 
+ migration_status            | character varying(255)      | 
+ replication_status          | character varying(255)      | 
+ replication_extended_status | character varying(255)      | 
+ replication_driver_data     | character varying(255)      | 
+ consistencygroup_id         | character varying(36)       | 
+ provider_id                 | character varying(255)      | 
+ multiattach                 | boolean                     | 
+ previous_status             | character varying(255)      | 
+ cluster_name                | character varying(255)      | 
+ group_id                    | character varying(36)       | 
+Indexes:
+    "volumes_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "volumes_consistencygroup_id_fkey" FOREIGN KEY (consistencygroup_id) REFERENCES consistencygroups(id)
+    "volumes_group_id_fkey" FOREIGN KEY (group_id) REFERENCES groups(id)
+Referenced by:
+    TABLE "snapshots" CONSTRAINT "snapshots_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+    TABLE "transfers" CONSTRAINT "transfers_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+    TABLE "volume_admin_metadata" CONSTRAINT "volume_admin_metadata_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+    TABLE "volume_attachment" CONSTRAINT "volume_attachment_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+    TABLE "volume_glance_metadata" CONSTRAINT "volume_glance_metadata_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+    TABLE "volume_metadata" CONSTRAINT "volume_metadata_volume_id_fkey" FOREIGN KEY (volume_id) REFERENCES volumes(id)
+
+cinder=# SELECT updated_at,id FROM volumes WHERE status='available';
+         updated_at         |                  id                  
+----------------------------+--------------------------------------
+ 2017-07-26 11:08:09.923582 | 919b461b-16da-4b0d-a804-bfa6d7d53e68
+ 2017-11-10 09:06:00.287226 | 9d1ea158-4528-4d32-86b1-2b8cf60fe390
+...
+ 2018-02-22 15:09:21.84961  | 201e941d-3e75-407d-9129-a5061fe8f6c9
+(13 rows)
+
+cinder=#

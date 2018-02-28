@@ -1,0 +1,115 @@
+> cat ~/.my.cnf
+[client]
+user     = cinder
+password = YOUR_PASSWORD
+host     = 192.168.81.29
+
+> mysql cinder
+
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 759018
+Server version: 10.1.25-MariaDB SUSE package
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [cinder]> show tables;
++----------------------------+
+| Tables_in_cinder           |
++----------------------------+
+| backups                    |
+| cgsnapshots                |
+| clusters                   |
+| consistencygroups          |
+| driver_initiator_data      |
+| encryption                 |
+| group_snapshots            |
+| group_type_projects        |
+| group_type_specs           |
+| group_types                |
+| group_volume_type_mapping  |
+| groups                     |
+| image_volume_cache_entries |
+| messages                   |
+| migrate_version            |
+| quality_of_service_specs   |
+| quota_classes              |
+| quota_usages               |
+| quotas                     |
+| reservations               |
+| services                   |
+| snapshot_metadata          |
+| snapshots                  |
+| transfers                  |
+| volume_admin_metadata      |
+| volume_attachment          |
+| volume_glance_metadata     |
+| volume_metadata            |
+| volume_type_extra_specs    |
+| volume_type_projects       |
+| volume_types               |
+| volumes                    |
+| workers                    |
++----------------------------+
+33 rows in set (0.00 sec)
+
+MariaDB [cinder]> describe volumes;
++-----------------------------+--------------+------+-----+---------+-------+
+| Field                       | Type         | Null | Key | Default | Extra |
++-----------------------------+--------------+------+-----+---------+-------+
+| created_at                  | datetime     | YES  |     | NULL    |       |
+| updated_at                  | datetime     | YES  |     | NULL    |       |
+| deleted_at                  | datetime     | YES  |     | NULL    |       |
+| deleted                     | tinyint(1)   | YES  |     | NULL    |       |
+| id                          | varchar(36)  | NO   | PRI | NULL    |       |
+| ec2_id                      | varchar(255) | YES  |     | NULL    |       |
+| user_id                     | varchar(255) | YES  |     | NULL    |       |
+| project_id                  | varchar(255) | YES  |     | NULL    |       |
+| host                        | varchar(255) | YES  |     | NULL    |       |
+| size                        | int(11)      | YES  |     | NULL    |       |
+| availability_zone           | varchar(255) | YES  |     | NULL    |       |
+| status                      | varchar(255) | YES  |     | NULL    |       |
+| attach_status               | varchar(255) | YES  |     | NULL    |       |
+| scheduled_at                | datetime     | YES  |     | NULL    |       |
+| launched_at                 | datetime     | YES  |     | NULL    |       |
+| terminated_at               | datetime     | YES  |     | NULL    |       |
+| display_name                | varchar(255) | YES  |     | NULL    |       |
+| display_description         | varchar(255) | YES  |     | NULL    |       |
+| provider_location           | varchar(256) | YES  |     | NULL    |       |
+| provider_auth               | varchar(256) | YES  |     | NULL    |       |
+| snapshot_id                 | varchar(36)  | YES  |     | NULL    |       |
+| volume_type_id              | varchar(36)  | YES  |     | NULL    |       |
+| source_volid                | varchar(36)  | YES  |     | NULL    |       |
+| bootable                    | tinyint(1)   | YES  |     | NULL    |       |
+| provider_geometry           | varchar(255) | YES  |     | NULL    |       |
+| _name_id                    | varchar(36)  | YES  |     | NULL    |       |
+| encryption_key_id           | varchar(36)  | YES  |     | NULL    |       |
+| migration_status            | varchar(255) | YES  |     | NULL    |       |
+| replication_status          | varchar(255) | YES  |     | NULL    |       |
+| replication_extended_status | varchar(255) | YES  |     | NULL    |       |
+| replication_driver_data     | varchar(255) | YES  |     | NULL    |       |
+| consistencygroup_id         | varchar(36)  | YES  | MUL | NULL    |       |
+| provider_id                 | varchar(255) | YES  |     | NULL    |       |
+| multiattach                 | tinyint(1)   | YES  |     | NULL    |       |
+| previous_status             | varchar(255) | YES  |     | NULL    |       |
+| cluster_name                | varchar(255) | YES  |     | NULL    |       |
+| group_id                    | varchar(36)  | YES  | MUL | NULL    |       |
++-----------------------------+--------------+------+-----+---------+-------+
+37 rows in set (0.00 sec)
+
+MariaDB [cinder]> SELECT updated_at,id FROM volumes WHERE status='available';
++---------------------+--------------------------------------+
+| updated_at          | id                                   |
++---------------------+--------------------------------------+
+| 2018-01-29 09:43:10 | 02f5dcc6-1d5e-450f-8485-22c7e622f158 |
+| 2017-12-01 15:02:31 | 065a1f4d-dd58-4a9d-8953-2f8bdcc7818d |
+| 2018-02-02 17:09:22 | 065b87ec-d4df-4ebb-bb9a-8c68c21c4039 |
+...
+| 2018-02-13 10:56:12 | 10c1f7f2-0478-41c9-b181-cd47d4575545 |
++---------------------+--------------------------------------+
+30 rows in set (0.01 sec)
+

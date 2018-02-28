@@ -1,0 +1,19 @@
+root@d8c:~ # ping -s 1600 bernhard.suse.de.
+PING bernhard.suse.de (10.160.4.191) 1600(1628) bytes of data.
+From 10.84.0.25 icmp_seq=1 Frag needed and DF set (mtu = 1500)
+1608 bytes from bernhard.suse.de (10.160.4.191): icmp_seq=2 ttl=54 time=164 ms
+1608 bytes from bernhard.suse.de (10.160.4.191): icmp_seq=3 ttl=54 time=163 ms
+1608 bytes from bernhard.suse.de (10.160.4.191): icmp_seq=4 ttl=54 time=164 ms
+1608 bytes from bernhard.suse.de (10.160.4.191): icmp_seq=5 ttl=54 time=159 ms
+^C
+--- bernhard.suse.de ping statistics ---
+5 packets transmitted, 4 received, +1 errors, 20% packet loss, time 4005ms
+rtt min/avg/max/mdev = 159.933/162.986/164.447/1.804 ms
+root@d8c:~ # ping -M do -s 1600 bernhard.suse.de.
+PING bernhard.suse.de (10.160.4.191) 1600(1628) bytes of data.
+ping: local error: Message too long, mtu=1500
+ping: local error: Message too long, mtu=1500
+^C
+--- bernhard.suse.de ping statistics ---
+2 packets transmitted, 0 received, +2 errors, 100% packet loss, time 999ms
+
