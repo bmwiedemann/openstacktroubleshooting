@@ -1,0 +1,55 @@
+root@d8c-dc-d4-af-8f-f4:/var/log # egrep "req-.*image.* 200 [0-9]{5,}" glance/api.log
+2018-02-28 11:14:50.444 6701 INFO eventlet.wsgi.server [req-817bd4e9-f9a5-4811-8cd6-c0ccc3f55f3c a9b8bba5288f41d59b6dfae22ab0c3bf 75cf94166de649858f8fcadfd48e80ac - default default] 192.168.81.12 - - [28/Feb/2018 11:14:50] "GET /v2/images?limit=1000&sort_key=created_at&sort_dir=desc HTTP/1.1" 200 12841 0.075083
+2018-02-28 12:27:38.543 6703 INFO eventlet.wsgi.server [req-60b8037a-9956-41d1-afcb-4744ac537b91 1ddfc8b70f4643018c6d11eab7cce039 609ad0b07a414b40bd4884768bf6ac89 - default default] 192.168.81.12 - - [28/Feb/2018 12:27:38] "GET /v2/images/565afb63-500a-4903-93af-87ca4589ce1e/file HTTP/1.1" 200 313852159 2.752501 
+2018-02-28 12:36:08.236 6698 INFO eventlet.wsgi.server [req-dda82cab-0dec-4707-9690-82a89962183f 7658331f132eae9ac0a0bd98434b2fbd78142a6a0136b844065dd5b8adce422d 609ad0b07a414b40bd4884768bf6ac89 - 03f3a86e5ec147f49c9d566cab5a3c6d default] 192.168.81.12 - - [28/Feb/2018 12:36:08] "GET /v2/images/b442cbc7-d4fc-4baf-90e9-516044251ad8/file HTTP/1.1" 200 344588543 6.108287
+2018-02-28 12:36:15.363 6695 INFO eventlet.wsgi.server [req-b8a598c6-5439-41b2-92e4-4ce98aa733a3 7658331f132eae9ac0a0bd98434b2fbd78142a6a0136b844065dd5b8adce422d 609ad0b07a414b40bd4884768bf6ac89 - 03f3a86e5ec147f49c9d566cab5a3c6d default] 192.168.81.12 - - [28/Feb/2018 12:36:15] "GET /v2/images/6fb295a5-7654-465d-bbe9-9e34cc9949b2/file HTTP/1.1" 200 341115135 3.084827
+
+root@d8c-dc-d4-af-8f-f4:/var/log # openstack user show 7658331f132eae9ac0a0bd98434b2fbd78142a6a0136b844065dd5b8adce422d
++---------------------+--------------------------------------------------------+| Field               | Value                                                  |+---------------------+--------------------------------------------------------+| domain_id           | 03f3a86e5ec147f49c9d566cab5a3c6d                       |
+| id                  | 7658331f132eae9ac0a0bd98434b2fbd78142a6a0136b844065dd5 ||                     | b8adce422d                                             |
+| name                | maxmuster                                              |
+| password_expires_at | None                                                   |
++---------------------+--------------------------------------------------------+
+root@d8c-dc-d4-af-8f-f4:/var/log # openstack project show 609ad0b07a414b40bd4884768bf6ac89
++-------------+----------------------------------+
+| Field       | Value                            | 
++-------------+----------------------------------+
+| description |                                  |
+| domain_id   | default                          |
+| enabled     | True                             |
+| id          | 609ad0b07a414b40bd4884768bf6ac89 |
+| is_domain   | False                            | 
+| name        | susemanager                      |
+| parent_id   | default                          | 
++-------------+----------------------------------+
+root@d8c-dc-d4-af-8f-f4:/var/log # openstack project show 03f3a86e5ec147f49c9d566cab5a3c6d
++-------------+----------------------------------+
+| Field       | Value                            |
++-------------+----------------------------------+
+| description |                                  |
+| domain_id   | None                             |
+| enabled     | True                             |
+| id          | 03f3a86e5ec147f49c9d566cab5a3c6d |
+| is_domain   | True                             |
+| name        | ldap_users                       |
+| parent_id   | None                             |
++-------------+----------------------------------+
+
+
+nova-api.log:
+2018-02-28 12:36:54.273 54681 INFO nova.metadata.wsgi.server [req-1dcbb39d-0e07-41ea-bfcb-630bcf5150f6 - - - - -] 10.0.1.222,192.168.81.12 "GET /latest/meta-data/public-keys/0/openssh-key HTTP/1.1" status: 200 len: 866 time: 0.4138131
+
+2018-02-28 13:28:34.046 54674 INFO nova.osapi_compute.wsgi.server [req-2b9e1cbb-86fd-4428-aff2-618d7e54acb4 1ddfc8b70f4643018c6d11eab7cce039 609ad0b07a414b40bd4884768bf6ac89 - default default] 192.168.81.12 "POST /v2.1/609ad0b07a414b40bd4884768bf6ac89/os-volumes_boot HTTP/1.1" status: 202 len: 926 time: 1.1830258
+root@d8c-dc-d4-af-8f-f4:/var/log # openstack user show 1ddfc8b70f4643018c6d11eab7cce039
++---------------------+----------------------------------+
+| Field               | Value                            |
++---------------------+----------------------------------+
+| default_project_id  | 609ad0b07a414b40bd4884768bf6ac89 |
+| domain_id           | default                          |
+| email               | maxmuster@suse.com               |
+| enabled             | True                             |
+| id                  | 1ddfc8b70f4643018c6d11eab7cce039 |
+| name                | susemanager-ci                   |
+| password_expires_at | None                             |
++---------------------+----------------------------------+
+
