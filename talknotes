@@ -1,0 +1,19 @@
+Vostellung
+
+wer weiss nicht
+  - was openstack ist
+  - was openstack-glance macht
+
+
+Service deps: not shown here: DB, rabbitmq + explain role
+
+
+On Compute Node: examples/virsh 
+
+/var/log:      browser examples/logfiles.txt - much - where to start depends on problem
+
+instance start => nova-scheduler.log
+
+network => neutron l3 | openvswitch agent.log
+
+
