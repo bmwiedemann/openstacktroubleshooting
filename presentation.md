@@ -150,6 +150,8 @@ host     = 192.168.81.29
 
 `#` **` tail -f */*.log | grep ERROR`**
 
+`#` **` zgrep ERROR */*.log{,-20180228{,.xz}}`**
+
 # Questions?
 
 # Discussing further steps
